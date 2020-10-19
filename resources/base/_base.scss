@@ -9,13 +9,21 @@
     
 }
 
-#root {
-    position: relative;
-}
+
 
 #svg1 {
     position: absolute;
     display: block;
+    fill: none;
+    stroke: #000;
+    height: 500px;
+    width: 650px;
+    stroke-width: 1px;
+}
+
+svg {
+    height: 100%;
+    width: 100%;
 }
 // svg {
 //     display: block;
