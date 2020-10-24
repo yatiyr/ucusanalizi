@@ -105,7 +105,7 @@
             flex-direction: column;
             justify-content: space-between;
             justify-items: stretch;
-            min-width: 50rem;
+            min-width: 35rem;
 
             .footer {
                 display: flex;
@@ -127,5 +127,13 @@
     svg {
         height: 50%;
         width: 50%;
+    }
+}
+
+.planeSvg {
+    overflow: visible;
+    
+    path {
+        transform: scale(.4);
     }
 }

@@ -7,25 +7,32 @@ import GraphSvg from '../components/svgs/graphSvg';
 import ClockSvg from '../components/svgs/clockSvg';
 import Rs from '../../resources/svgs/rs.svg';
 import Map from '../components/map/Map';
+import FlightAnalyzer from './Ucus';
 
 type Props = any;
 type State = {
     theme: string;
     situation: string;
+    flights: any[];
 }
 
 class Analiz extends Component<Props,State> {
 
-    public planes: any;
+    public analyzer: any;
+    public interval: any;
 
     constructor(props : any) {
         super(props);
-        this.planes = {}
         this.state = {
             theme: "dark",
-            situation: "Alert"
+            situation: "Idle",
+            flights: []
         }
+        this.analyzer = new FlightAnalyzer.FlightAnalyzer();
+        this.interval = undefined;
         this.getData = this.getData.bind(this);
+        this.toggleDataCollection = this.toggleDataCollection.bind(this);
+        this.toggledButtonValue = this.toggledButtonValue.bind(this);
     }
 
     componentDidMount() {
@@ -34,11 +41,42 @@ class Analiz extends Component<Props,State> {
     }
 
     getData() {
-        fetch('https://opensky-network.org/api/states/all?lamin=34.0&lomin=18.0&lamax=39&lomax=29.0')
+        fetch('https://opensky-network.org/api/states/all?lamin=40.0&lomin=23.0&lamax=47.0&lomax=48.0')
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                this.analyzer.collectData(data.states);
+                this.setState({flights: this.analyzer.flights});
+            })
     }
 
+    startDataCollection() {
+        this.getData();
+        this.interval = setInterval(() => this.getData(),10005);
+    }
+
+    stopDataCollection() {
+        clearInterval(this.interval);
+    }
+
+    toggleDataCollection() {
+        if(this.state.situation == 'Idle') {
+            this.startDataCollection();
+            this.setState({situation: 'Stable'});
+        }
+        else {
+            this.stopDataCollection();
+            this.setState({situation: 'Idle'});
+        }
+    }
+
+    toggledButtonValue() {
+        if(this.state.situation == "Idle") {
+            return "Başlat";
+        }
+        else {
+            return "Durdur";
+        }
+    }
 
     render() : JSX.Element {
         return(
@@ -54,11 +92,11 @@ class Analiz extends Component<Props,State> {
                     </div>
                     <GraphSvg isRunning={this.state.situation == "Idle" ? false : true} theme={this.state.theme} situation={this.state.situation}/>
                     <div className="btnTime">
-                        <div className={`btnStart ${this.state.theme}BtnStart${this.state.situation}`}>
-                            Başlat
+                        <div className={`btnStart ${this.state.theme}BtnStart${this.state.situation}`} onClick={this.toggleDataCollection}>
+                            {this.toggledButtonValue()}
                         </div>
                         <div className={`btnSettings ${this.state.theme}BtnSettings${this.state.situation}`}>
-                            Ayarlar
+                            
                         </div>
                         <div className={`time ${this.state.theme}Time${this.state.situation}`}>
                             <ClockSvg theme={this.state.theme} situation={this.state.situation}/>
@@ -73,7 +111,7 @@ class Analiz extends Component<Props,State> {
                         </div>
                     </div>
                     <div className="map darkMap">
-                        <Map/>
+                        <Map flights={this.state.flights}/>
                     </div>
                 </div>
             </div>
