@@ -1,0 +1,131 @@
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+
+    .header {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        user-select: none;
+        overflow: visible;
+        .svgHeading {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            width: 20rem;
+            .headingIcon {
+                
+                flex: 0 0 4rem;
+                align-self: stretch;
+                padding: 0rem .5rem 0rem 1.5rem;
+                svg {
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+
+            .heading {
+                padding: 0rem 0rem 0rem 1rem;
+                font-size: 2rem;
+                text-align: center;
+                align-self: stretch;
+                display: flex;
+                align-items: center;
+                font-family: "InterVar";
+                font-weight: 600;
+                text-transform: capitalize;
+            }
+    
+        }
+
+        .btnTime {
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-content: stretch;
+            align-self: stretch;
+    
+            .btnStart {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                font-family: "InterVar";
+                font-weight: 500;
+                font-size: 2rem;
+            }
+    
+            .btnSettings {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                font-family: "InterVar";
+                font-weight: 500;
+                font-size: 2rem;
+            }
+
+            .time {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                font-family: "InterVar";
+                font-weight: 500;
+                font-size: 2rem;
+            }
+        }
+
+
+    }
+
+
+    .mf {
+        display: flex;
+        flex-direction: row;
+        justify-content: stretch;
+        height: 100%;
+
+        .map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .flights {
+            height: 100%;
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            justify-content: space-between;
+            justify-items: stretch;
+            min-width: 50rem;
+
+            .footer {
+                display: flex;
+                flex-direction: column;
+
+                .tskgvIcon {
+                    height: 5rem;
+                    width: 5rem;
+                }
+            }
+
+        }
+    }
+
+}
+
+.clockContainer {
+    align-self: center;
+    svg {
+        height: 50%;
+        width: 50%;
+    }
+}

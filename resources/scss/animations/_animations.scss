@@ -1,0 +1,22 @@
+
+
+// ------------------------- RUNNING GRAPH -----------------------------------------//
+$runningGraphSvgPathLength: 4489.82958984375;
+
+.graphSvg {
+
+    .yuklemeBayrak2_svg__runner {
+        stroke-dasharray: $runningGraphSvgPathLength/4;
+        animation: graphSvgRunning 7s infinite linear;
+    }
+}
+
+@keyframes graphSvgRunning {
+    0% {
+        stroke-dashoffset: $runningGraphSvgPathLength;
+    }
+    100% {
+        stroke-dashoffset: -$runningGraphSvgPathLength;
+    }
+}
+// ---------------------------------------------------------------------------------//

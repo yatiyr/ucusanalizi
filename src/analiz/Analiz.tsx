@@ -3,37 +3,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {Component} from 'react';
-import Ucak from '../../resources/svgs/ucak.svg';
-import {animate} from '../utils/animations';
+import GraphSvg from '../components/svgs/graphSvg';
+import ClockSvg from '../components/svgs/clockSvg';
+import Rs from '../../resources/svgs/rs.svg';
+import Map from '../components/map/Map';
 
 type Props = any;
 type State = {
-    
-}
-
-type Theme = {
     theme: string;
-    toggleTheme: (arg0: string) => void;
+    situation: string;
 }
-
 
 class Analiz extends Component<Props,State> {
-    toggleTheme: ((arg0: string) => void) | undefined;
-    
+
+    public planes: any;
+
     constructor(props : any) {
         super(props);
-
-        this.step = this.step.bind(this);
-        this.animateSvg = this.animateSvg.bind(this);
-        this.stepSvgDraw = this.stepSvgDraw.bind(this);
-    }
-
-    step(element : any, progressFunc : any) {
-        var from = 0;
-        var to   = 300;
-
-        var pro = from + (to-from)*progressFunc;
-        element.style.left = pro + 'px';
+        this.planes = {}
+        this.state = {
+            theme: "dark",
+            situation: "Alert"
+        }
+        this.getData = this.getData.bind(this);
     }
 
     componentDidMount() {
@@ -41,28 +33,52 @@ class Analiz extends Component<Props,State> {
 
     }
 
-    stepSvgDraw(element: any, progressFunc: any) {
-        var from = element.children[0].children[0].getTotalLength();
-        var to = 0;
+    getData() {
+        fetch('https://opensky-network.org/api/states/all?lamin=34.0&lomin=18.0&lamax=39&lomax=29.0')
+            .then(response => response.json())
+            .then(data => console.log(data))
+    }
 
-        var pro = from + (to-from)*progressFunc;
-        element.style.strokeDasharray = from;
-        element.style.strokeDashoffset = pro;
-    }
-    animateSvg() {
-        const bezier = [{x: .17, y: .67},{x: 1, y: 1}];
-        setInterval(
-        () => animate(document.querySelector('#svg1'), bezier ,this.stepSvgDraw,4000),300);
-    }
 
     render() : JSX.Element {
         return(
-            <div id="svg1" onClick={this.animateSvg}>
-                <Ucak/>
+            <div className={`main ${this.state.theme}Main${this.state.situation}`}>
+                <div className={`header ${this.state.theme}Header${this.state.situation}`}>
+                    <div className={`svgHeading`}>
+                        <div className={`headingIcon ${this.state.theme}HeadingIcon${this.state.situation}`}>
+                            <Rs/>
+                        </div>
+                        <div className={`heading ${this.state.theme}Heading${this.state.situation}`}>
+                            Uçuş Analizi
+                        </div>
+                    </div>
+                    <GraphSvg isRunning={this.state.situation == "Idle" ? false : true} theme={this.state.theme} situation={this.state.situation}/>
+                    <div className="btnTime">
+                        <div className={`btnStart ${this.state.theme}BtnStart${this.state.situation}`}>
+                            Başlat
+                        </div>
+                        <div className={`btnSettings ${this.state.theme}BtnSettings${this.state.situation}`}>
+                            Ayarlar
+                        </div>
+                        <div className={`time ${this.state.theme}Time${this.state.situation}`}>
+                            <ClockSvg theme={this.state.theme} situation={this.state.situation}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="mf">
+                    <div className="flights darkFlights" onClick={this.getData}>
+                        ucuslar
+                        <div className="footer darkFooter">
+                            afasfa
+                        </div>
+                    </div>
+                    <div className="map darkMap">
+                        <Map/>
+                    </div>
+                </div>
             </div>
         )
     }
-
 
 }
 

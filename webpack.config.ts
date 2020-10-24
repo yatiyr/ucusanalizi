@@ -37,7 +37,7 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.(jpg|png|woff|woff2|eot|ttf)$/,
-        loader: "url-loader",
+        loader: "file-loader",
         options: {
             name: "[path][name].[ext]",
         },

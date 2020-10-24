@@ -1,0 +1,24 @@
+.graphContainer {
+    position: relative;
+    overflow: visible;
+    flex: 1 0 2rem;
+    max-width: 25rem;
+    min-width: 25rem;
+}
+
+.graphSvg {
+
+    position: relative;
+    margin: 1rem 1rem 1rem 1rem;
+    .yuklemeBayrak2_svg__runner {
+        transition: opacity 2s, filter 2s;
+        opacity: 100;
+        stroke-width: .6rem;
+    }
+    .yuklemeBayrak2_svg__placeholder {
+        transition: opacity 2s, filter 2s;
+        opacity: 0;
+        stroke-width: 1rem;
+    }
+
+}

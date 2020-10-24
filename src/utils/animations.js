@@ -87,7 +87,7 @@ export function animate(element, bezier, step, duration) {
     function frame() {
         var t = progress/progressDuration;
         var progressFunc = timeFunction(bezier,t);
-        console.log(progressFunc);
+
         if(progress == progressDuration) {
             step(element,progressFunc);
             clearInterval(id);
